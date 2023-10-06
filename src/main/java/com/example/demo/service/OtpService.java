@@ -9,7 +9,7 @@ import java.util.Random;
 @Service
 public class OtpService {
 
-    private HashMap<String, String> otps = new HashMap<>();
+    private final HashMap<String, String> otps = new HashMap<>();
 
     private final MailSend mailSend;
 
@@ -27,7 +27,9 @@ public class OtpService {
 
     public void setAndSendOtp(String email){
         otps.put(email, generateOtp());
-        mailSend.sendOTPByEmail(email, otps.get(email));
+        String subject = "OTP Verification";
+        String message = "Your verification code is:"+ otps.get(email);
+        mailSend.send_otp(email, subject, message);
     }
     public boolean verifyOtp(String email, String otp) {
 

@@ -15,17 +15,17 @@ public class MailSend {
         this.javaMailSender = javaMailSender;
     }
 
-    public void sendOTPByEmail(String userEmail,String otp) {
+    public void send_otp(String to,String subject, String body) {
         try {
 
             SimpleMailMessage mailMessage = new SimpleMailMessage();
-            mailMessage.setTo(userEmail);
-            mailMessage.setSubject("Verify");
-            mailMessage.setText("Your OTP code is: " + otp);
+            mailMessage.setTo(to);
+            mailMessage.setSubject(subject);
+            mailMessage.setText(body);
 
             javaMailSender.send(mailMessage);
         } catch (MailException e) {
-            e.printStackTrace();
+            // capture log
         }
     }
 }
