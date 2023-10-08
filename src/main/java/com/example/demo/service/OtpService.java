@@ -11,10 +11,10 @@ public class OtpService {
 
     private final HashMap<String, String> otps = new HashMap<>();
 
-    private final MailSend mailSend;
+    private final EmailService mailSend;
 
     @Autowired
-    public OtpService(MailSend mailSend) {
+    public OtpService(EmailService mailSend) {
         this.mailSend = mailSend;
     }
 
@@ -27,14 +27,10 @@ public class OtpService {
 
     public void setAndSendOtp(String email){
         otps.put(email, generateOtp());
-        String subject = "OTP Verification";
-        String message = "Your verification code is:"+ otps.get(email);
-        mailSend.send_otp(email, subject, message);
+        mailSend.send_otp(email, "OTP Verification", "Your verification code is:"+ otps.get(email));
     }
     public boolean verifyOtp(String email, String otp) {
 
-        System.out.println(otp);
-        System.out.println(otps.get(email));
         if (otp.equals(otps.get(email))){
             removeOtp(email);
             return true;
@@ -45,6 +41,11 @@ public class OtpService {
 
     public void removeOtp(String email){
         otps.remove(email);
+    }
+
+    public void resendOtp(String email){
+        removeOtp(email);
+        setAndSendOtp(email);
     }
 
 

@@ -4,12 +4,11 @@ import com.example.demo.payload.Otp;
 import com.example.demo.service.OtpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/")
-public class MailController {
+public class  MailController {
 
     private final OtpService otpService;
 
@@ -38,6 +37,18 @@ public class MailController {
 
 
     }
+
+    @PostMapping("/resend")
+    public ResponseEntity<?> resendOtp(@RequestParam String email){
+
+        otpService.resendOtp(email);
+
+        return ResponseEntity.ok("resent");
+
+
+    }
+
+
 
 
 }
